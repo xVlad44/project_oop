@@ -1,0 +1,9 @@
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/finalapp.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/finalapp_autogen_timestamp_deps.dir
+C:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/finalapp_autogen.dir
