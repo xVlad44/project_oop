@@ -19,8 +19,10 @@ set(PROJECT_SOURCES
         src/ui/mainwindow.ui
         src/domain/artifact.cpp
         src/controller/artifact_controller.cpp
+        src/controller/command.cpp
+        src/controller/filter.cpp
+        src/repository/csv_repository.cpp
         # ... other existing files ...
-        # src/repository/csv_repository.cpp (when you create it)
         # src/repository/json_repository.cpp (when you create it)
 )
 

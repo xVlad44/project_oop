@@ -338,9 +338,27 @@
 			null
 		],
 		[
+			"C:/UBB/OOP/finalapp/src/controller/command.h",
+			"MU",
+			"KECQXMYYOW/moc_command.cpp",
+			null
+		],
+		[
+			"C:/UBB/OOP/finalapp/src/controller/filter.h",
+			"MU",
+			"KECQXMYYOW/moc_filter.cpp",
+			null
+		],
+		[
 			"C:/UBB/OOP/finalapp/src/domain/artifact.h",
 			"MU",
 			"A7EWVEEJ67/moc_artifact.cpp",
+			null
+		],
+		[
+			"C:/UBB/OOP/finalapp/src/repository/csv_repository.h",
+			"MU",
+			"4MXHP2MZPM/moc_csv_repository.cpp",
 			null
 		],
 		[
@@ -432,8 +450,11 @@
 			"MU",
 			null
 		],
+		[ "C:/UBB/OOP/finalapp/src/controller/command.cpp", "MU", null ],
+		[ "C:/UBB/OOP/finalapp/src/controller/filter.cpp", "MU", null ],
 		[ "C:/UBB/OOP/finalapp/src/domain/artifact.cpp", "MU", null ],
 		[ "C:/UBB/OOP/finalapp/src/main.cpp", "MU", null ],
+		[ "C:/UBB/OOP/finalapp/src/repository/csv_repository.cpp", "MU", null ],
 		[ "C:/UBB/OOP/finalapp/src/ui/mainwindow.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

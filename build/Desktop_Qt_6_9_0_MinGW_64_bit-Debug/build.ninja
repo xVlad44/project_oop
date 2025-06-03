@@ -89,6 +89,30 @@ build CMakeFiles/finalapp.dir/src/controller/artifact_controller.cpp.obj: CXX_CO
   OBJECT_DIR = CMakeFiles\finalapp.dir
   OBJECT_FILE_DIR = CMakeFiles\finalapp.dir\src\controller
 
+build CMakeFiles/finalapp.dir/src/controller/command.cpp.obj: CXX_COMPILER__finalapp_unscanned_Debug C$:/UBB/OOP/finalapp/src/controller/command.cpp || cmake_object_order_depends_target_finalapp
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\finalapp.dir\src\controller\command.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/finalapp_autogen/include -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug -IC:/UBB/OOP/finalapp/src -IC:/UBB/OOP/finalapp/src/ui -IC:/UBB/OOP/finalapp/src/controller -IC:/UBB/OOP/finalapp/src/domain -IC:/UBB/OOP/finalapp/src/repository -isystem C:/Qt/6.9.0/mingw_64/include/QtCore -isystem C:/Qt/6.9.0/mingw_64/include -isystem C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\finalapp.dir
+  OBJECT_FILE_DIR = CMakeFiles\finalapp.dir\src\controller
+
+build CMakeFiles/finalapp.dir/src/controller/filter.cpp.obj: CXX_COMPILER__finalapp_unscanned_Debug C$:/UBB/OOP/finalapp/src/controller/filter.cpp || cmake_object_order_depends_target_finalapp
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\finalapp.dir\src\controller\filter.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/finalapp_autogen/include -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug -IC:/UBB/OOP/finalapp/src -IC:/UBB/OOP/finalapp/src/ui -IC:/UBB/OOP/finalapp/src/controller -IC:/UBB/OOP/finalapp/src/domain -IC:/UBB/OOP/finalapp/src/repository -isystem C:/Qt/6.9.0/mingw_64/include/QtCore -isystem C:/Qt/6.9.0/mingw_64/include -isystem C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\finalapp.dir
+  OBJECT_FILE_DIR = CMakeFiles\finalapp.dir\src\controller
+
+build CMakeFiles/finalapp.dir/src/repository/csv_repository.cpp.obj: CXX_COMPILER__finalapp_unscanned_Debug C$:/UBB/OOP/finalapp/src/repository/csv_repository.cpp || cmake_object_order_depends_target_finalapp
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\finalapp.dir\src\repository\csv_repository.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/finalapp_autogen/include -IC:/UBB/OOP/finalapp/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug -IC:/UBB/OOP/finalapp/src -IC:/UBB/OOP/finalapp/src/ui -IC:/UBB/OOP/finalapp/src/controller -IC:/UBB/OOP/finalapp/src/domain -IC:/UBB/OOP/finalapp/src/repository -isystem C:/Qt/6.9.0/mingw_64/include/QtCore -isystem C:/Qt/6.9.0/mingw_64/include -isystem C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\finalapp.dir
+  OBJECT_FILE_DIR = CMakeFiles\finalapp.dir\src\repository
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target finalapp
@@ -97,7 +121,7 @@ build CMakeFiles/finalapp.dir/src/controller/artifact_controller.cpp.obj: CXX_CO
 #############################################
 # Link the executable finalapp.exe
 
-build finalapp.exe: CXX_EXECUTABLE_LINKER__finalapp_Debug CMakeFiles/finalapp.dir/finalapp_autogen/mocs_compilation.cpp.obj CMakeFiles/finalapp.dir/src/main.cpp.obj CMakeFiles/finalapp.dir/src/ui/mainwindow.cpp.obj CMakeFiles/finalapp.dir/src/domain/artifact.cpp.obj CMakeFiles/finalapp.dir/src/controller/artifact_controller.cpp.obj | C$:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a || finalapp_autogen finalapp_autogen_timestamp_deps
+build finalapp.exe: CXX_EXECUTABLE_LINKER__finalapp_Debug CMakeFiles/finalapp.dir/finalapp_autogen/mocs_compilation.cpp.obj CMakeFiles/finalapp.dir/src/main.cpp.obj CMakeFiles/finalapp.dir/src/ui/mainwindow.cpp.obj CMakeFiles/finalapp.dir/src/domain/artifact.cpp.obj CMakeFiles/finalapp.dir/src/controller/artifact_controller.cpp.obj CMakeFiles/finalapp.dir/src/controller/command.cpp.obj CMakeFiles/finalapp.dir/src/controller/filter.cpp.obj CMakeFiles/finalapp.dir/src/repository/csv_repository.cpp.obj | C$:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a || finalapp_autogen finalapp_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a  C:/Qt/6.9.0/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

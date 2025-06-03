@@ -55,7 +55,7 @@ void CsvRepository::updateArtifact(const ArcheologicalArtifact& artifact) {
 }
 
 ArcheologicalArtifact CsvRepository::findArtifactById(const QString& artifactId) const {
-    loadFromFile();
+    loadFromFile(); // This call will now be valid
     
     for (const auto& artifact : m_artifacts) {
         if (artifact.getId() == artifactId) {
@@ -67,14 +67,14 @@ ArcheologicalArtifact CsvRepository::findArtifactById(const QString& artifactId)
 }
 
 std::vector<ArcheologicalArtifact> CsvRepository::getAllArtifacts() const {
-    loadFromFile();
+    loadFromFile(); // This call will also be valid if loadFromFile is const
     return m_artifacts;
 }
 
-void CsvRepository::loadFromFile() {
+void CsvRepository::loadFromFile() const { // Add const here
     if (m_loaded) return;
     
-    m_artifacts.clear();
+    m_artifacts.clear(); // Modifying mutable member
     
     QFile file(m_filePath);
     if (!file.exists()) {
@@ -112,7 +112,7 @@ void CsvRepository::loadFromFile() {
     }
     
     file.close();
-    m_loaded = true;
+    m_loaded = true; // Modifying mutable member
 }
 
 void CsvRepository::saveToFile() const {

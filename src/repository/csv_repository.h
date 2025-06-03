@@ -20,7 +20,7 @@ public:
 private:
     QString m_filePath;
     
-    void loadFromFile();
+    void loadFromFile() const; // Add const here
     void saveToFile() const;
     QString escapeCSVField(const QString& field) const;
     QString unescapeCSVField(const QString& field) const;
