@@ -1,7 +1,7 @@
 #include "ui/mainwindow.h"
 #include "controller/artifact_controller.h"
-// #include "repository/csv_repository.h" // Include when ready
-// #include "repository/json_repository.h" // Include when ready
+#include "repository/csv_repository.h" // Include when ready
+#include "repository/json_repository.h" // Include when ready
 #include "repository/repository.h" // For the interface
 #include <QApplication>
 #include <vector> // For dummy repository
@@ -58,13 +58,14 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // 1. Create a repository instance (using InMemoryRepository for now)
-    std::unique_ptr<Repository> repo = std::make_unique<InMemoryRepository>();
-
-    // Optionally, add some dummy data to the in-memory repository for testing
-    // static_cast<InMemoryRepository*>(repo.get())->addArtifact({"ID001", "Pottery Shard", "Ancient clay piece", "Clay", QDate(2023, 1, 15), "Site A"});
-    // static_cast<InMemoryRepository*>(repo.get())->addArtifact({"ID002", "Arrowhead", "Flint arrowhead", "Flint", QDate(2022, 5, 20), "Site B"});
-
+    // 1. Create a repository instance (using CSV repository for persistence)
+    std::unique_ptr<Repository> repo = std::make_unique<CsvRepository>("artifacts.csv");
+    
+    // Alternatively, you can use JSON repository:
+    // std::unique_ptr<Repository> repo = std::make_unique<JsonRepository>("artifacts.json");
+    
+    // Or keep using InMemoryRepository for testing:
+    // std::unique_ptr<Repository> repo = std::make_unique<InMemoryRepository>();
 
     // 2. Create the controller, passing ownership of the repository
     ArtifactController controller(std::move(repo));

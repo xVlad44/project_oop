@@ -192,38 +192,57 @@ void MainWindow::on_artifactsListView_clicked(const QModelIndex &index)
 void MainWindow::on_pushButton_Undo_clicked()
 {
     if (!m_controller) return;
-    // TODO: Implement Undo in controller and call it
-    // if (m_controller->canUndo()) {
-    //     m_controller->undo();
-    //     populateArtifactsList();
-    //     QMessageBox::information(this, "Undo", "Last action undone.");
-    // } else {
-    //     QMessageBox::information(this, "Undo", "Nothing to undo.");
-    // }
-    QMessageBox::information(this, "Undo", "Undo functionality not yet implemented.");
+    
+    if (m_controller->canUndo()) {
+        m_controller->undo();
+        populateArtifactsList();
+        QMessageBox::information(this, "Undo", "Last action undone.");
+    } else {
+        QMessageBox::information(this, "Undo", "Nothing to undo.");
+    }
 }
 
 void MainWindow::on_pushButton_Redo_clicked()
 {
     if (!m_controller) return;
-    // TODO: Implement Redo in controller and call it
-    // if (m_controller->canRedo()) {
-    //     m_controller->redo();
-    //     populateArtifactsList();
-    //     QMessageBox::information(this, "Redo", "Last undone action redone.");
-    // } else {
-    //     QMessageBox::information(this, "Redo", "Nothing to redo.");
-    // }
-    QMessageBox::information(this, "Redo", "Redo functionality not yet implemented.");
+    
+    if (m_controller->canRedo()) {
+        m_controller->redo();
+        populateArtifactsList();
+        QMessageBox::information(this, "Redo", "Last undone action redone.");
+    } else {
+        QMessageBox::information(this, "Redo", "Nothing to redo.");
+    }
 }
 
 void MainWindow::on_pushButton_ApplyFilter_clicked()
 {
     if (!m_controller) return;
-    QString filterText = ui->lineEdit_FilterCriteria->text();
-    // TODO: Implement filtering in controller and update list
-    // std::vector<ArcheologicalArtifact> filteredArtifacts = m_controller->filterArtifacts(filterText, ...);
-    // Update m_artifactsModel with filteredArtifacts
-    QMessageBox::information(this, "Filter", QString("Filtering by: '%1' (not yet implemented).").arg(filterText));
-    // populateArtifactsList(); // Or a new method to populate with filtered list
+    
+    QString filterText = ui->lineEdit_FilterCriteria->text().trimmed();
+    
+    if (filterText.isEmpty()) {
+        // Show all artifacts if filter is empty
+        populateArtifactsList();
+        return;
+    }
+    
+    try {
+        // Apply a simple name-based filter (can be enhanced to support multiple criteria)
+        std::vector<ArcheologicalArtifact> filteredArtifacts = 
+            m_controller->filterArtifactsByName(filterText, false); // case-insensitive
+        
+        // Update the display with filtered results
+        QStringList artifactDisplayList;
+        for (const auto& artifact : filteredArtifacts) {
+            artifactDisplayList.append(QString("%1: %2").arg(artifact.getId()).arg(artifact.getName()));
+        }
+        m_artifactsModel->setStringList(artifactDisplayList);
+        
+        QMessageBox::information(this, "Filter", 
+            QString("Found %1 artifacts matching '%2'").arg(filteredArtifacts.size()).arg(filterText));
+        
+    } catch (const std::exception& e) {
+        QMessageBox::critical(this, "Filter Error", QString("Failed to apply filter: %1").arg(e.what()));
+    }
 }
