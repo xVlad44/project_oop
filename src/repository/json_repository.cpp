@@ -72,7 +72,7 @@ std::vector<ArcheologicalArtifact> JsonRepository::getAllArtifacts() const {
     return m_artifacts;
 }
 
-void JsonRepository::loadFromFile() {
+void JsonRepository::loadFromFile() const {
     if (m_loaded) return;
     
     m_artifacts.clear();

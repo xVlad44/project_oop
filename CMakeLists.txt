@@ -22,8 +22,7 @@ set(PROJECT_SOURCES
         src/controller/command.cpp
         src/controller/filter.cpp
         src/repository/csv_repository.cpp
-        # ... other existing files ...
-        # src/repository/json_repository.cpp (when you create it)
+        src/repository/json_repository.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

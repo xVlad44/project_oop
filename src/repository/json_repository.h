@@ -21,7 +21,7 @@ public:
 private:
     QString m_filePath;
     
-    void loadFromFile();
+    void loadFromFile() const; // Make this const
     void saveToFile() const;
     QJsonObject artifactToJson(const ArcheologicalArtifact& artifact) const;
     ArcheologicalArtifact jsonToArtifact(const QJsonObject& jsonObj) const;
