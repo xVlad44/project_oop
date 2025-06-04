@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QDateEdit>
 #include <QListWidget>
+#include "../controller/filter.h" 
 #include <memory> // For std::unique_ptr
 
 
@@ -36,6 +37,7 @@ private slots:
     void onFilterTypeChanged(int index);
     void onRemoveFilterClicked();
     void resetFilters();
+    void onFilterLogicChanged();
 
 private:
     Ui::MainWindow *ui;
@@ -44,10 +46,11 @@ private:
     
     // Filter UI components
     QComboBox* m_filterTypeComboBox;
+    QComboBox* m_filterLogicComboBox;  // Add this line
     QDateEdit* m_startDateEdit;
     QDateEdit* m_endDateEdit;
     QListWidget* m_activeFilters;
-    std::unique_ptr<AndFilter> m_compositeFilter;
+    std::unique_ptr<FilterStrategy> m_compositeFilter;  // Change from AndFilter to FilterStrategy
     
     void setupFilterUI();
     void populateArtifactsList();

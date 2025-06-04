@@ -1,46 +1,39 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QMessageBox> // For simple feedback
-#include <QDebug>      // For debugging output
+#include <QMessageBox>
+#include <QDebug>
+#include <QComboBox>      // Add this
+#include <QDateEdit>      // Add this
+#include <QListWidget>    // Add this
+#include <QPushButton>    // Add this
+#include <QLabel>         // Add this
 
 MainWindow::MainWindow(ArtifactController* controller, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_controller(controller)
     , m_artifactsModel(new QStringListModel(this))
-    , m_filterTypeComboBox(nullptr)
-    , m_startDateEdit(nullptr)
-    , m_endDateEdit(nullptr)
-    , m_activeFilters(new QListWidget(this))
+    , m_filterTypeComboBox(nullptr)      // Initialize to nullptr
+    , m_filterLogicComboBox(nullptr)     // Initialize to nullptr
+    , m_startDateEdit(nullptr)           // Initialize to nullptr
+    , m_endDateEdit(nullptr)             // Initialize to nullptr
+    , m_activeFilters(nullptr)           // Initialize to nullptr
+    , m_compositeFilter(nullptr)         // Initialize to nullptr
 {
     ui->setupUi(this);
     
-    // Setup the existing UI components
     if (!m_controller) {
-        QMessageBox::critical(this, "Error", "Controller not available. Application might not function correctly.");
+        QMessageBox::critical(this, "Error", "Controller not available!");
         return;
     }
     
     ui->artifactsListView->setModel(m_artifactsModel);
     
-    // Set up the filter UI components
+    // Setup filter UI AFTER ui->setupUi()
     setupFilterUI();
     
-    // Add the active filters list below the filter controls
-    ui->verticalLayout_Controls->addWidget(new QLabel("Active Filters:", this));
-    ui->verticalLayout_Controls->addWidget(m_activeFilters);
-    
-    // Connect the remove filter button
-    QPushButton* removeFilterButton = new QPushButton("Remove Selected Filter", this);
-    connect(removeFilterButton, &QPushButton::clicked, this, &MainWindow::onRemoveFilterClicked);
-    ui->verticalLayout_Controls->addWidget(removeFilterButton);
-    
-    // Initial population of the list
+    // Populate initial list
     populateArtifactsList();
-
-    // Connect signals to slots (if not using auto-connection via on_..._clicked naming convention)
-    // connect(ui->pushButton_Add, &QPushButton::clicked, this, &MainWindow::on_pushButton_Add_clicked);
-    // connect(ui->artifactsListView, &QListView::clicked, this, &MainWindow::on_artifactsListView_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -320,88 +313,154 @@ void MainWindow::on_pushButton_ApplyFilter_clicked()
 }
 
 void MainWindow::setupFilterUI() {
-    // Create the filter combo box if it doesn't exist
+    // Create filter type combo box
     if (!m_filterTypeComboBox) {
-        m_filterTypeComboBox = new QComboBox(ui->groupBox_Filter);
+        m_filterTypeComboBox = new QComboBox(this);
         m_filterTypeComboBox->addItem("Name", "name");
         m_filterTypeComboBox->addItem("ID", "id");
         m_filterTypeComboBox->addItem("Material", "material");
         m_filterTypeComboBox->addItem("Location", "location");
         m_filterTypeComboBox->addItem("Date Range", "date");
-        ui->horizontalLayout_Filter->insertWidget(0, m_filterTypeComboBox);
+        
+        if (ui->horizontalLayout_Filter) {
+            ui->horizontalLayout_Filter->insertWidget(0, m_filterTypeComboBox);
+        }
     }
 
-    // Create date range widgets if they don't exist
+    // Create filter logic combo box
+    if (!m_filterLogicComboBox) {
+        m_filterLogicComboBox = new QComboBox(this);
+        m_filterLogicComboBox->addItem("AND (All conditions)", "and");
+        m_filterLogicComboBox->addItem("OR (Any condition)", "or");
+        
+        if (ui->horizontalLayout_Filter) {
+            ui->horizontalLayout_Filter->insertWidget(1, m_filterLogicComboBox);
+        }
+    }
+
+    // Create date range widgets
     if (!m_startDateEdit) {
-        m_startDateEdit = new QDateEdit(ui->groupBox_Filter);
+        m_startDateEdit = new QDateEdit(this);
         m_startDateEdit->setCalendarPopup(true);
         m_startDateEdit->setDate(QDate::currentDate().addYears(-100));
         m_startDateEdit->setVisible(false);
-        ui->horizontalLayout_Filter->insertWidget(2, m_startDateEdit);
+        
+        if (ui->horizontalLayout_Filter) {
+            ui->horizontalLayout_Filter->insertWidget(2, m_startDateEdit);
+        }
     }
 
     if (!m_endDateEdit) {
-        m_endDateEdit = new QDateEdit(ui->groupBox_Filter);
+        m_endDateEdit = new QDateEdit(this);
         m_endDateEdit->setCalendarPopup(true);
         m_endDateEdit->setDate(QDate::currentDate());
         m_endDateEdit->setVisible(false);
-        ui->horizontalLayout_Filter->insertWidget(3, m_endDateEdit);
+        
+        if (ui->horizontalLayout_Filter) {
+            ui->horizontalLayout_Filter->insertWidget(3, m_endDateEdit);
+        }
     }
 
-    // Connect signals
-    connect(m_filterTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), 
-        this, &MainWindow::onFilterTypeChanged);
-    
-    // Add reset filters button
-    QPushButton* resetButton = new QPushButton("Reset Filters", ui->groupBox_Filter);
-    connect(resetButton, &QPushButton::clicked, this, &MainWindow::resetFilters);
-    ui->horizontalLayout_Filter->addWidget(resetButton);
-}
+    // Create active filters list
+    if (!m_activeFilters) {
+        m_activeFilters = new QListWidget(this);
+        m_activeFilters->setMaximumHeight(100);
+        
+        // Use the correct layout name from your UI file
+        if (ui->verticalLayout_Controls) {  // Changed from verticalLayout to verticalLayout_Controls
+            ui->verticalLayout_Controls->addWidget(new QLabel("Active Filters:", this));
+            ui->verticalLayout_Controls->addWidget(m_activeFilters);
+            
+            // Add "Remove Selected Filter" button
+            QPushButton* removeFilterButton = new QPushButton("Remove Selected Filter", this);
+            connect(removeFilterButton, &QPushButton::clicked, this, &MainWindow::onRemoveFilterClicked);
+            ui->verticalLayout_Controls->addWidget(removeFilterButton);
+        }
+    }
 
-void MainWindow::resetFilters() {
-    m_activeFilters->clear();
-    m_compositeFilter.reset();
-    populateArtifactsList();
+    // Connect signals AFTER widgets are created
+    connect(m_filterTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), 
+            this, &MainWindow::onFilterTypeChanged);
+    connect(m_filterLogicComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &MainWindow::onFilterLogicChanged);
+    
+    // Add reset button to the filter layout
+    QPushButton* resetButton = new QPushButton("Reset Filters", this);
+    connect(resetButton, &QPushButton::clicked, this, &MainWindow::resetFilters);
+    
+    if (ui->horizontalLayout_Filter) {
+        ui->horizontalLayout_Filter->addWidget(resetButton);
+    }
 }
 
 void MainWindow::onFilterTypeChanged(int index) {
+    if (!m_filterTypeComboBox || !m_startDateEdit || !m_endDateEdit) return;
+    
     QString type = m_filterTypeComboBox->currentData().toString();
     bool isDateRange = (type == "date");
     
-    ui->lineEdit_FilterCriteria->setVisible(!isDateRange);
+    if (ui->lineEdit_FilterCriteria) {
+        ui->lineEdit_FilterCriteria->setVisible(!isDateRange);
+    }
     m_startDateEdit->setVisible(isDateRange);
     m_endDateEdit->setVisible(isDateRange);
 }
 
-void MainWindow::addActiveFilter(std::unique_ptr<FilterStrategy> filter, const QString& displayText) {
-    if (!filter) return;
+void MainWindow::resetFilters() {
+    if (m_activeFilters) {
+        m_activeFilters->clear();
+    }
+    m_compositeFilter.reset();
+    populateArtifactsList();
+}
+
+void MainWindow::onFilterLogicChanged() {
+    if (!m_activeFilters) return;
     
+    rebuildCompositeFilterFromUI();
+    applyCurrentFilter();
+}
+
+void MainWindow::addActiveFilter(std::unique_ptr<FilterStrategy> filter, const QString& displayText) {
+    if (!filter || !m_filterLogicComboBox || !m_activeFilters) return;
+    
+    // Create appropriate composite filter based on selected logic
     if (!m_compositeFilter) {
-        m_compositeFilter = std::make_unique<AndFilter>();
+        QString logic = m_filterLogicComboBox->currentData().toString();
+        if (logic == "or") {
+            m_compositeFilter = std::make_unique<OrFilter>();
+        } else {
+            m_compositeFilter = std::make_unique<AndFilter>();
+        }
     }
     
     // Add to the composite filter
-    m_compositeFilter->addFilter(filter->clone());
-    
-    // Add to the UI list with filter type as user data
-    QListWidgetItem* item = new QListWidgetItem(displayText);
-    
-    // Store filter type and parameters for potential rebuilding
-    QString filterType = m_filterTypeComboBox->currentData().toString();
-    QVariantMap filterData;
-    filterData["type"] = filterType;
-    
-    if (filterType == "date") {
-        filterData["startDate"] = m_startDateEdit->date();
-        filterData["endDate"] = m_endDateEdit->date();
-    } else {
-        filterData["text"] = ui->lineEdit_FilterCriteria->text().trimmed();
+    if (auto andFilter = dynamic_cast<AndFilter*>(m_compositeFilter.get())) {
+        andFilter->addFilter(filter->clone());
+    } else if (auto orFilter = dynamic_cast<OrFilter*>(m_compositeFilter.get())) {
+        orFilter->addFilter(filter->clone());
     }
     
-    item->setData(Qt::UserRole, QVariant::fromValue(filterData));
-    m_activeFilters->addItem(item);
+    // Add to UI list
+    QListWidgetItem* item = new QListWidgetItem(displayText);
     
-    // Apply the filter
+    // Store filter data
+    if (m_filterTypeComboBox) {
+        QString filterType = m_filterTypeComboBox->currentData().toString();
+        QVariantMap filterData;
+        filterData["type"] = filterType;
+        
+        if (filterType == "date" && m_startDateEdit && m_endDateEdit) {
+            filterData["startDate"] = m_startDateEdit->date();
+            filterData["endDate"] = m_endDateEdit->date();
+        } else if (ui->lineEdit_FilterCriteria) {
+            filterData["text"] = ui->lineEdit_FilterCriteria->text().trimmed();
+        }
+        
+        item->setData(Qt::UserRole, QVariant::fromValue(filterData));
+    }
+    
+    m_activeFilters->addItem(item);
     applyCurrentFilter();
 }
 
@@ -452,10 +511,17 @@ void MainWindow::rebuildCompositeFilterFromUI() {
         return;
     }
     
-    // Create a new composite filter
-    m_compositeFilter = std::make_unique<AndFilter>();
+    // Create appropriate composite filter based on selected logic
+    QString logic = m_filterLogicComboBox->currentData().toString();
+    if (logic == "or") {
+        auto orFilter = std::make_unique<OrFilter>();
+        m_compositeFilter = std::move(orFilter);
+    } else {
+        auto andFilter = std::make_unique<AndFilter>();
+        m_compositeFilter = std::move(andFilter);
+    }
     
-    // Loop through all items in the active filters list
+    // Loop through all items and rebuild filters
     for (int i = 0; i < m_activeFilters->count(); ++i) {
         QListWidgetItem* item = m_activeFilters->item(i);
         QVariantMap filterData = item->data(Qt::UserRole).toMap();
@@ -488,7 +554,11 @@ void MainWindow::rebuildCompositeFilterFromUI() {
         
         // Add to composite filter if successfully created
         if (filter) {
-            m_compositeFilter->addFilter(filter->clone());
+            if (auto andFilter = dynamic_cast<AndFilter*>(m_compositeFilter.get())) {
+                andFilter->addFilter(filter->clone());
+            } else if (auto orFilter = dynamic_cast<OrFilter*>(m_compositeFilter.get())) {
+                orFilter->addFilter(filter->clone());
+            }
         }
     }
 }
